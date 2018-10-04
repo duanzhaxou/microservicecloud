@@ -1,0 +1,32 @@
+---
+
+spring:  application:    name: microservicecloud-zuul-gateway         #很重要
+  profiles:    active: dev
+
+eureka:  client:    service-url:      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:    instance-id: gateway-9527.com
+    prefer-ip-address: true
+info:
+  app.name: atguigu-microservicecloud
+  company.name: www.atguigu.com
+  build.artifactid: $project.artifactid$
+  build.version: 0.0.1-SNAPSHOT
+  author: 段朝旭
+#我们在用网关 去 类似于 http://myzuul.com/{微服务名称}/dept/get/2 这样的请求的时候，为了 系统的安全性，
+#我们可以选择 zuul 的路由
+zuul:
+  ignored-services: microservicecloud-dept  #忽略此 微服务
+  #ignored-services: "*"  配置为"*"可以忽略所有的 微服务真实名称
+  routes:
+    mydept.serviceId: microservicecloud-dept  # 将此 微服务名称 替换为 另外一个 名称，这样就避免暴露了真实的微服务名称，提高了系统安全性。
+    mydept.path: /mydept/**
+  prefix: /atguigu      #设置统一的公共前缀
+---
+server:  port: 9527 
+spring:
+ profiles: dev   
+---
+server:
+  port: 8002  
+spring:
+ profiles: pro 

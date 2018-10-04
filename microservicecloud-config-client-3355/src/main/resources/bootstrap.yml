@@ -1,0 +1,11 @@
+#application.yml是用户级别的配置
+#bootstrap.yml 是系统级别的，优先级别的更高
+#config  client 可以通过  config server 拉取到github 上面的 配置
+spring:
+  cloud:
+    config:
+      name: microsevicecloud-config-client-3355 
+      profile: test
+      label: master
+      uri: http://config-3344.com:3344
+      
